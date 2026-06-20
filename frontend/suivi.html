@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Suivi des demandes de transport du Centre d'Appel Intelligent.">
+  <title>Suivi de Demande - Centre d'Appel Intelligent IA</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
+        <span>ISGMATECH</span>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html" class="menu-item">
+          <i class="fa-solid fa-house"></i>
+          <span>Accueil</span>
+        </a>
+        <a href="chat.html" class="menu-item">
+          <i class="fa-solid fa-comments"></i>
+          <span>Chat IA</span>
+        </a>
+        <a href="transport.html" class="menu-item">
+          <i class="fa-solid fa-car"></i>
+          <span>Transport</span>
+        </a>
+        <a href="suivi.html" class="menu-item active">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Suivi</span>
+        </a>
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="themeToggleBtn">
+          <i class="fa-solid fa-moon"></i>
+          <span>Sombre</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="page-title-area">
+          <h1>Suivi de Demande</h1>
+        </div>
+        <div style="width: 24px;"></div>
+      </header>
+
+      <div class="content-body">
+        <!-- Container for dynamically rendered transport items -->
+        <div class="suivi-list-container" id="suiviList">
+          
+          <!-- Loading Indicator before JS renders (will be replaced) -->
+          <div style="text-align: center; padding: 48px;">
+            <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: var(--text-muted);"></i>
+            <p style="margin-top: 12px; color: var(--text-muted);">Chargement de vos demandes...</p>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Dynamic Logic Scripts -->
+  <script src="js/suivi.js"></script>
+</body>
+</html>

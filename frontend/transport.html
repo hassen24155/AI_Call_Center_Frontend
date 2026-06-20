@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulaire de demande de transport du Centre d'Appel Intelligent.">
+  <title>Demande de Transport - Centre d'Appel Intelligent IA</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
+        <span>ISGMATECH</span>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html" class="menu-item">
+          <i class="fa-solid fa-house"></i>
+          <span>Accueil</span>
+        </a>
+        <a href="chat.html" class="menu-item">
+          <i class="fa-solid fa-comments"></i>
+          <span>Chat IA</span>
+        </a>
+        <a href="transport.html" class="menu-item active">
+          <i class="fa-solid fa-car"></i>
+          <span>Transport</span>
+        </a>
+        <a href="suivi.html" class="menu-item">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Suivi</span>
+        </a>
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="themeToggleBtn">
+          <i class="fa-solid fa-moon"></i>
+          <span>Sombre</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="page-title-area">
+          <h1>Demande de Transport</h1>
+        </div>
+        <div style="width: 24px;"></div>
+      </header>
+
+      <div class="content-body">
+        <div class="form-container">
+          
+          <div class="glass-card">
+            <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">
+              Formuler une demande de trajet
+            </h2>
+            <p class="subtitle" style="margin-bottom: 24px;">
+              Remplissez le formulaire ci-dessous pour soumettre une demande de réservation de transport. L'administrateur validera votre demande rapidement.
+            </p>
+
+            <form id="transportForm" novalidate>
+              
+              <!-- Nom Complet -->
+              <div class="form-group">
+                <label for="fullName"><i class="fa-solid fa-user"></i> Nom Complet</label>
+                <input type="text" id="fullName" placeholder="Ex: Jean Dupont" required>
+              </div>
+
+              <!-- Téléphone -->
+              <div class="form-group">
+                <label for="phone"><i class="fa-solid fa-phone"></i> Numéro de Téléphone</label>
+                <input type="tel" id="phone" placeholder="Ex: 06 12 34 56 78" required>
+              </div>
+
+              <!-- Adresse de Départ -->
+              <div class="form-group">
+                <label for="departure"><i class="fa-solid fa-location-dot"></i> Adresse de Départ</label>
+                <input type="text" id="departure" placeholder="Ex: Gare de Lyon, Paris" required>
+              </div>
+
+              <!-- Destination -->
+              <div class="form-group">
+                <label for="destination"><i class="fa-solid fa-flag-checkered"></i> Destination</label>
+                <input type="text" id="destination" placeholder="Ex: Aéroport Charles de Gaulle, Roissy" required>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary" id="submitFormBtn">
+                <span>Envoyer la demande</span>
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Dynamic Logic Scripts -->
+  <script src="js/transport.js"></script>
+</body>
+</html>

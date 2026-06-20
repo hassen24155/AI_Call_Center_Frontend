@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interface de discussion en temps réel avec l'IA du Centre d'Appel.">
+  <title>Chat IA - Centre d'Appel Intelligent IA</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
+        <span>ISGMATECH</span>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html" class="menu-item">
+          <i class="fa-solid fa-house"></i>
+          <span>Accueil</span>
+        </a>
+        <a href="chat.html" class="menu-item active">
+          <i class="fa-solid fa-comments"></i>
+          <span>Chat IA</span>
+        </a>
+        <a href="transport.html" class="menu-item">
+          <i class="fa-solid fa-car"></i>
+          <span>Transport</span>
+        </a>
+        <a href="suivi.html" class="menu-item">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Suivi</span>
+        </a>
+        <a href="dashboard.html" class="menu-item">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="themeToggleBtn">
+          <i class="fa-solid fa-moon"></i>
+          <span>Sombre</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="page-title-area">
+          <h1>Chat IA</h1>
+        </div>
+        <div style="width: 24px;"></div> <!-- Spacer matching the burger menu size for header balance -->
+      </header>
+
+      <div class="content-body">
+        <div class="chat-wrapper">
+          
+          <!-- Chat Messages Box -->
+          <div class="chat-box" id="chatBox">
+            <!-- Simulated greeting from IA -->
+            <div class="chat-message ai">
+              <div class="chat-bubble">
+                Bonjour ! Je suis l'assistant virtuel ISGMATECH. Comment puis-je vous aider aujourd'hui ? Vous pouvez me poser des questions ou me demander de planifier un transport.
+              </div>
+              <div class="chat-meta">IA • à l'instant</div>
+            </div>
+          </div>
+
+          <!-- Chat Input Controls -->
+          <div class="chat-controls">
+            <div class="chat-input-container">
+              <input type="text" id="chatInput" class="chat-input" placeholder="Écrivez votre message ici..." aria-label="Message pour l'IA">
+              <div class="chat-input-buttons">
+                <!-- Microphone Button for Simulated Voice Input -->
+                <button type="button" id="micBtn" class="chat-btn chat-btn-mic" title="Entrée vocale">
+                  <i class="fa-solid fa-microphone"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Send Button -->
+            <button type="button" id="sendBtn" class="chat-btn chat-btn-send" title="Envoyer le message">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Dynamic Logic Scripts -->
+  <script src="js/chat.js"></script>
+</body>
+</html>

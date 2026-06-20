@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tableau de bord d'administration du Centre d'Appel Intelligent.">
+  <title>Dashboard Administrateur - Centre d'Appel Intelligent IA</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
+        <span>ISGMATECH</span>
+      </div>
+      <nav class="sidebar-menu">
+        <a href="index.html" class="menu-item">
+          <i class="fa-solid fa-house"></i>
+          <span>Accueil</span>
+        </a>
+        <a href="chat.html" class="menu-item">
+          <i class="fa-solid fa-comments"></i>
+          <span>Chat IA</span>
+        </a>
+        <a href="transport.html" class="menu-item">
+          <i class="fa-solid fa-car"></i>
+          <span>Transport</span>
+        </a>
+        <a href="suivi.html" class="menu-item">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Suivi</span>
+        </a>
+        <a href="dashboard.html" class="menu-item active">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="themeToggleBtn">
+          <i class="fa-solid fa-moon"></i>
+          <span>Sombre</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="page-title-area">
+          <h1>Tableau de Bord Administrateur</h1>
+        </div>
+        <div style="width: 24px;"></div>
+      </header>
+
+      <div class="content-body">
+        <div class="dashboard-grid">
+          
+          <!-- Statistics Row -->
+          <div class="stats-grid">
+            <!-- Total Requests -->
+            <div class="glass-card stat-card">
+              <div class="stat-info">
+                <span class="stat-label">Total Demandes</span>
+                <span class="stat-value" id="statTotal">0</span>
+              </div>
+              <div class="stat-icon">
+                <i class="fa-solid fa-folder-open"></i>
+              </div>
+            </div>
+
+            <!-- Pending Requests -->
+            <div class="glass-card stat-card">
+              <div class="stat-info">
+                <span class="stat-label">En attente</span>
+                <span class="stat-value" id="statPending">0</span>
+              </div>
+              <div class="stat-icon">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+            </div>
+
+            <!-- Accepted Requests -->
+            <div class="glass-card stat-card">
+              <div class="stat-info">
+                <span class="stat-label">Acceptées</span>
+                <span class="stat-value" id="statAccepted">0</span>
+              </div>
+              <div class="stat-icon">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+
+            <!-- Refused Requests -->
+            <div class="glass-card stat-card">
+              <div class="stat-info">
+                <span class="stat-label">Refusées</span>
+                <span class="stat-value" id="statRefused">0</span>
+              </div>
+              <div class="stat-icon">
+                <i class="fa-solid fa-circle-xmark"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Section: Requests and Chats -->
+          <div class="dashboard-row">
+            
+            <!-- Requests Management Table -->
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+              <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">
+                Gestion des Demandes de Trajet
+              </h2>
+              <p class="subtitle" style="margin-bottom: 16px;">
+                Validez ou rejetez les demandes de transport formulées par les utilisateurs.
+              </p>
+              
+              <div class="table-responsive">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Client & Tél</th>
+                      <th>Trajet (Départ → Arrivée)</th>
+                      <th>Date</th>
+                      <th>Statut</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminTableBody">
+                    <!-- Dynamic rendering -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Conversation History List -->
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+              <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">
+                Conversations IA
+              </h2>
+              <p class="subtitle" style="margin-bottom: 16px;">
+                Historique des interactions des clients avec le chatbot intelligent.
+              </p>
+              
+              <!-- Reset button for logs -->
+              <button id="clearLogsBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.8rem; margin-bottom: 12px; align-self: flex-end; width: auto;">
+                <i class="fa-solid fa-trash-can"></i> Vider l'historique
+              </button>
+
+              <div class="history-list" id="chatHistoryList">
+                <!-- Dynamic rendering -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Dynamic Logic Scripts -->
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Centre d'Appel Intelligent IA - Solution moderne de communication et de transport propulsée par l'intelligence artificielle.">
+  <title>Accueil - Centre d'Appel Intelligent IA</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="landing-body">
+
+  <div class="landing-container">
+    <div class="glass-card landing-card">
+      
+      <!-- Theme Switcher Top Right of card -->
+      <div style="position: absolute; top: 16px; right: 16px;">
+        <button class="theme-toggle" id="themeToggleBtn" style="padding: 8px 12px; width: auto; font-size: 0.8rem;">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- Logo Section -->
+      <div class="landing-logo-container">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo">
+      </div>
+
+      <!-- Brand Name -->
+      <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">
+        ISGMATECH
+      </h2>
+
+      <!-- Main Title -->
+      <h1 class="landing-title">
+        Centre d'Appel <br>
+        <span class="text-gradient">Intelligent IA</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="landing-subtitle">
+        Une solution conversationnelle de pointe pour planifier vos demandes de transport et gérer vos interactions grâce à notre assistant virtuel intelligent.
+      </p>
+
+      <!-- Action Button -->
+      <a href="chat.html" class="btn btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px; font-size: 1.05rem;">
+        <span>Commencer</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+
+      <!-- Quick Navigation Shortcuts for demonstration -->
+      <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; width: 100%; border-top: 1px solid var(--border-color); padding-top: 24px;">
+        <a href="transport.html" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
+          <i class="fa-solid fa-car"></i> Transport
+        </a>
+        <a href="suivi.html" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
+          <i class="fa-solid fa-map-location-dot"></i> Suivi
+        </a>
+        <a href="dashboard.html" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
+          <i class="fa-solid fa-chart-line"></i> Dashboard
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Shared layout javascript for theme handling -->
+  <script>
+    // Theme switching logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    // Check local storage or system preference
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-theme');
+      themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    } else {
+      localStorage.setItem('theme', 'dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+      const isLight = document.body.classList.contains('light-theme');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      themeToggleBtn.innerHTML = isLight ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+    });
+  </script>
+</body>
+</html>
