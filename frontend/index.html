@@ -12,80 +12,228 @@
   <!-- Global Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="landing-body">
+<body>
 
-  <div class="landing-container">
-    <div class="glass-card landing-card">
+  <div class="app-container">
+    
+    <!-- Navigation Sidebar (Mounted dynamically by main.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
       
-      <!-- Theme Switcher Top Right of card -->
-      <div style="position: absolute; top: 16px; right: 16px;">
-        <button class="theme-toggle" id="themeToggleBtn" style="padding: 8px 12px; width: auto; font-size: 0.8rem;">
-          <i class="fa-solid fa-moon"></i>
-        </button>
+      <!-- Top Header (Mounted dynamically by main.js) -->
+      <header class="top-header"></header>
+
+      <div class="content-body">
+        
+        <!-- Hero Section -->
+        <section class="hero-section">
+          <div class="hero-content">
+            <div class="hero-tag">
+              <i class="fa-solid fa-bolt" style="color: var(--accent-cyan);"></i>
+              <span data-i18n="hero-badge">Plateforme Enterprise IA 2026</span>
+            </div>
+            <h1 class="hero-title">
+              <span data-i18n="hero-title-1">Centre d'Appel</span> <br>
+              <span class="text-gradient" data-i18n="hero-title-2">Intelligent IA</span>
+            </h1>
+            <p class="hero-subtitle" data-i18n="hero-subtitle">
+              Une solution conversationnelle de pointe pour planifier vos demandes de transport et gérer vos interactions grâce à notre assistant virtuel intelligent. Optimisé pour l'efficacité opérationnelle.
+            </p>
+            <div class="hero-actions">
+              <a href="chat.html" class="btn btn-primary">
+                <span data-i18n="hero-cta-start">Parler à l'IA</span>
+                <i class="fa-solid fa-comments"></i>
+              </a>
+              <a href="transport.html" class="btn btn-secondary">
+                <span data-i18n="hero-cta-transport">Réserver un Trajet</span>
+                <i class="fa-solid fa-car"></i>
+              </a>
+            </div>
+          </div>
+          
+          <div class="hero-visual">
+            <div class="ai-orb-container">
+              <div class="ai-orb-core"></div>
+              <div class="ai-orb-ring-1"></div>
+              <div class="ai-orb-ring-2"></div>
+              <div class="ai-orb-ring-3"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Feature Grid Section -->
+        <section style="margin-top: 40px;">
+          <h2 class="home-section-title" data-i18n="features-section-title">Fonctionnalités Enterprise</h2>
+          <p class="home-section-subtitle" data-i18n="features-section-subtitle">
+            Découvrez les outils puissants intégrés à notre plateforme pour automatiser la logistique de transport et optimiser le support client.
+          </p>
+          
+          <div class="features-grid">
+            <!-- 1. AI Chat Assistant -->
+            <div class="glass-card feature-glass-card" onclick="window.location.href='chat.html'">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+              <h3 data-i18n="feature-chat-title">AI Chat Assistant</h3>
+              <p data-i18n="feature-chat-desc">Un agent conversationnel avancé pour répondre à vos questions, enregistrer des fichiers et synthétiser des réponses audio instantanément.</p>
+              <a href="chat.html" class="feature-link">
+                <span data-i18n="hero-cta-start">Parler à l'IA</span> <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <!-- 2. Transport Requests -->
+            <div class="glass-card feature-glass-card" onclick="window.location.href='transport.html'">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-car"></i>
+              </div>
+              <h3 data-i18n="feature-transport-title">Demandes de Transport</h3>
+              <p data-i18n="feature-transport-desc">Formulaire structuré et intelligent avec validation automatique des champs, sélection de catégories et gestion des priorités.</p>
+              <a href="transport.html" class="feature-link">
+                <span data-i18n="hero-cta-transport">Réserver un Trajet</span> <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <!-- 3. Request Tracking -->
+            <div class="glass-card feature-glass-card" onclick="window.location.href='suivi.html'">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-map-location-dot"></i>
+              </div>
+              <h3 data-i18n="feature-tracking-title">Suivi des Demandes</h3>
+              <p data-i18n="feature-tracking-desc">Suivez vos réservations en temps réel grâce à une timeline interactive et des simulations d'événements opérationnels.</p>
+              <a href="suivi.html" class="feature-link">
+                <span data-i18n="nav-tracking">Suivi</span> <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <!-- 4. Analytics Dashboard -->
+            <div class="glass-card feature-glass-card" onclick="window.location.href='dashboard.html'">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <h3 data-i18n="feature-analytics-title">Analytics Dashboard</h3>
+              <p data-i18n="feature-analytics-desc">Tableau de bord administrateur complet intégrant des graphiques interactifs Chart.js, filtres multicritères et exportation de données.</p>
+              <a href="dashboard.html" class="feature-link">
+                <span data-i18n="nav-dashboard">Dashboard</span> <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <!-- 5. Multilingual Support -->
+            <div class="glass-card feature-glass-card">
+              <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-globe"></i>
+              </div>
+              <h3 data-i18n="feature-lang-title">Multilingual Support</h3>
+              <p data-i18n="feature-lang-desc">Support natif du Français, de l'Arabe et du Hassania avec inversion complète du layout (RTL) pour une inclusivité totale.</p>
+              <span class="feature-link" style="cursor: default; pointer-events: none;">
+                <span data-i18n="feature-lang-title">Multilingual Support</span>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Statistics Preview Section -->
+        <section class="stats-preview-grid">
+          <div class="stat-preview-item">
+            <span class="stat-preview-number" data-i18n="stats-conversations">15K+</span>
+            <span class="stat-preview-label" data-i18n="stats-conversations-label">Discussions résolues</span>
+          </div>
+          <div class="stat-preview-item" style="border-left: 1px solid var(--border-color); border-right: 1px solid var(--border-color);">
+            <span class="stat-preview-number" data-i18n="stats-requests">3.4K+</span>
+            <span class="stat-preview-label" data-i18n="stats-requests-label">Trajets planifiés</span>
+          </div>
+          <div class="stat-preview-item">
+            <span class="stat-preview-number" data-i18n="stats-satisfaction">99.8%</span>
+            <span class="stat-preview-label" data-i18n="stats-satisfaction-label">Satisfaction client</span>
+          </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section style="margin-bottom: 60px;">
+          <h2 class="home-section-title" data-i18n="testimonials-section-title">Ce que disent nos clients</h2>
+          <div class="testimonials-grid">
+            <div class="glass-card testimonial-card">
+              <p class="testimonial-quote" data-i18n="testi-quote-1">"L'assistant IA a planifié ma demande de transport en moins de 30 secondes. L'interface est moderne et extrêmement rapide!"</p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">MD</div>
+                <div class="testimonial-details">
+                  <h4 data-i18n="testi-author-1">Marc Dubois</h4>
+                  <span data-i18n="testi-role-1">Directeur Logistique, Paris</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="glass-card testimonial-card">
+              <p class="testimonial-quote" data-i18n="testi-quote-2">"L'intégration du Hassania avec un layout RTL parfait montre l'attention portée aux détails. Un outil indispensable pour notre équipe."</p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">FE</div>
+                <div class="testimonial-details">
+                  <h4 data-i18n="testi-author-2">Fatimetou Mint Ely</h4>
+                  <span data-i18n="testi-role-2">Responsable Support, Nouakchott</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="enterprise-footer">
+          <div class="footer-top">
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <img src="assets/images/logo.png" alt="ISGMATECH Logo">
+                <span>ISGMATECH</span>
+              </div>
+              <p data-i18n="footer-desc">ISGMATECH Centre d'Appel Intelligent IA. Révolutionner les communications d'entreprise et la gestion logistique grâce à l'intelligence artificielle avancée.</p>
+            </div>
+            <div class="footer-column">
+              <h4 data-i18n="footer-col-company">Entreprise</h4>
+              <ul>
+                <li><a href="#" data-i18n="footer-link-about">À propos</a></li>
+                <li><a href="#" data-i18n="footer-link-careers">Carrières</a></li>
+                <li><a href="#" data-i18n="footer-link-press">Presse</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4 data-i18n="footer-col-services">Services</h4>
+              <ul>
+                <li><a href="chat.html" data-i18n="nav-chat">Chat IA</a></li>
+                <li><a href="transport.html" data-i18n="nav-transport">Transport</a></li>
+                <li><a href="#" data-i18n="footer-link-support">Support Client</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4 data-i18n="footer-col-contact">Contact</h4>
+              <div class="footer-contact-info">
+                <div><i class="fa-solid fa-phone"></i> <span data-i18n="footer-phone">+33 1 23 45 67 89</span></div>
+                <div><i class="fa-solid fa-envelope"></i> <span data-i18n="footer-email">contact@isgmatech.com</span></div>
+                <div><i class="fa-solid fa-location-dot"></i> <span data-i18n="footer-address">12 Rue de la Paix, Paris, France</span></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="footer-bottom">
+            <div data-i18n="footer-copyright">© 2026 ISGMATECH. Tous droits réservés.</div>
+            <div class="footer-socials">
+              <a href="#" class="footer-social-link"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#" class="footer-social-link"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="#" class="footer-social-link"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+        </footer>
+
       </div>
+    </main>
 
-      <!-- Logo Section -->
-      <div class="landing-logo-container">
-        <img src="assets/images/logo.png" alt="ISGMATECH Logo">
-      </div>
-
-      <!-- Brand Name -->
-      <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); font-weight: 700;">
-        ISGMATECH
-      </h2>
-
-      <!-- Main Title -->
-      <h1 class="landing-title">
-        Centre d'Appel <br>
-        <span class="text-gradient">Intelligent IA</span>
-      </h1>
-
-      <!-- Subtitle -->
-      <p class="landing-subtitle">
-        Une solution conversationnelle de pointe pour planifier vos demandes de transport et gérer vos interactions grâce à notre assistant virtuel intelligent.
-      </p>
-
-      <!-- Action Button -->
-      <a href="chat.html" class="btn btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px; font-size: 1.05rem;">
-        <span>Commencer</span>
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-
-      <!-- Quick Navigation Shortcuts for demonstration -->
-      <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; width: 100%; border-top: 1px solid var(--border-color); padding-top: 24px;">
-        <a href="transport.html" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
-          <i class="fa-solid fa-car"></i> Transport
-        </a>
-        <a href="suivi.html" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
-          <i class="fa-solid fa-map-location-dot"></i> Suivi
-        </a>
-        <a href="dashboard.html" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
-          <i class="fa-solid fa-chart-line"></i> Dashboard
-        </a>
-      </div>
-
-    </div>
   </div>
 
-  <!-- Shared layout javascript for theme handling -->
-  <script>
-    // Theme switching logic
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    
-    // Check local storage or system preference
-    if (localStorage.getItem('theme') === 'light') {
-      document.body.classList.add('light-theme');
-      themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-    } else {
-      localStorage.setItem('theme', 'dark');
-    }
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
 
-    themeToggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
-      const isLight = document.body.classList.contains('light-theme');
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
-      themeToggleBtn.innerHTML = isLight ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-    });
-  </script>
+  <!-- Global scripts -->
+  <script src="js/translations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

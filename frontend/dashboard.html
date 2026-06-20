@@ -11,68 +11,33 @@
   
   <!-- Global Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
   <div class="app-container">
     
-    <!-- Navigation Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
-        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
-        <span>ISGMATECH</span>
-      </div>
-      <nav class="sidebar-menu">
-        <a href="index.html" class="menu-item">
-          <i class="fa-solid fa-house"></i>
-          <span>Accueil</span>
-        </a>
-        <a href="chat.html" class="menu-item">
-          <i class="fa-solid fa-comments"></i>
-          <span>Chat IA</span>
-        </a>
-        <a href="transport.html" class="menu-item">
-          <i class="fa-solid fa-car"></i>
-          <span>Transport</span>
-        </a>
-        <a href="suivi.html" class="menu-item">
-          <i class="fa-solid fa-map-location-dot"></i>
-          <span>Suivi</span>
-        </a>
-        <a href="dashboard.html" class="menu-item active">
-          <i class="fa-solid fa-chart-line"></i>
-          <span>Dashboard</span>
-        </a>
-      </nav>
-      <div class="sidebar-footer">
-        <button class="theme-toggle" id="themeToggleBtn">
-          <i class="fa-solid fa-moon"></i>
-          <span>Sombre</span>
-        </button>
-      </div>
-    </aside>
+    <!-- Navigation Sidebar (Mounted dynamically by main.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
 
     <!-- Main Content Area -->
     <main class="main-content">
-      <header class="top-header">
-        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="page-title-area">
-          <h1>Tableau de Bord Administrateur</h1>
-        </div>
-        <div style="width: 24px;"></div>
-      </header>
+      
+      <!-- Top Header (Mounted dynamically by main.js) -->
+      <header class="top-header"></header>
 
       <div class="content-body">
         <div class="dashboard-grid">
           
           <!-- Statistics Row -->
           <div class="stats-grid">
+            
             <!-- Total Requests -->
             <div class="glass-card stat-card">
               <div class="stat-info">
-                <span class="stat-label">Total Demandes</span>
+                <span class="stat-label" data-i18n="dash-stat-total">Total Demandes</span>
                 <span class="stat-value" id="statTotal">0</span>
               </div>
               <div class="stat-icon">
@@ -83,7 +48,7 @@
             <!-- Pending Requests -->
             <div class="glass-card stat-card">
               <div class="stat-info">
-                <span class="stat-label">En attente</span>
+                <span class="stat-label" data-i18n="dash-stat-pending">En attente</span>
                 <span class="stat-value" id="statPending">0</span>
               </div>
               <div class="stat-icon">
@@ -94,7 +59,7 @@
             <!-- Accepted Requests -->
             <div class="glass-card stat-card">
               <div class="stat-info">
-                <span class="stat-label">Acceptées</span>
+                <span class="stat-label" data-i18n="dash-stat-accepted">Acceptées</span>
                 <span class="stat-value" id="statAccepted">0</span>
               </div>
               <div class="stat-icon">
@@ -105,37 +70,143 @@
             <!-- Refused Requests -->
             <div class="glass-card stat-card">
               <div class="stat-info">
-                <span class="stat-label">Refusées</span>
+                <span class="stat-label" data-i18n="dash-stat-refused">Refusées</span>
                 <span class="stat-value" id="statRefused">0</span>
               </div>
               <div class="stat-icon">
                 <i class="fa-solid fa-circle-xmark"></i>
               </div>
             </div>
+
+            <!-- Registered Users -->
+            <div class="glass-card stat-card">
+              <div class="stat-info">
+                <span class="stat-label" data-i18n="dash-stat-users">Utilisateurs</span>
+                <span class="stat-value" id="statUsers">0</span>
+              </div>
+              <div class="stat-icon">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Charts Section Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 28px; margin-top: 10px;">
+            
+            <!-- Requests by Category & Requests by Language -->
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+              <h3 style="font-family: var(--font-title); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;" data-i18n="dash-chart-cat">Demandes par catégorie</h3>
+              <div style="flex: 1; min-height: 250px; position: relative;">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+              <h3 style="font-family: var(--font-title); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;" data-i18n="dash-chart-lang">Répartition par langue</h3>
+              <div style="flex: 1; min-height: 250px; position: relative; max-height: 250px; display: flex; justify-content: center;">
+                <canvas id="languageChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Requests per Day & User Growth -->
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+              <h3 style="font-family: var(--font-title); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;" data-i18n="dash-chart-daily">Demandes par jour</h3>
+              <div style="flex: 1; min-height: 250px; position: relative;">
+                <canvas id="dailyChart"></canvas>
+              </div>
+            </div>
+
+            <div class="glass-card" style="display: flex; flex-direction: column;">
+              <h3 style="font-family: var(--font-title); font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;" data-i18n="dash-chart-growth">Croissance des utilisateurs</h3>
+              <div style="flex: 1; min-height: 250px; position: relative;">
+                <canvas id="growthChart"></canvas>
+              </div>
+            </div>
+
           </div>
 
           <!-- Bottom Section: Requests and Chats -->
           <div class="dashboard-row">
             
             <!-- Requests Management Table -->
-            <div class="glass-card" style="display: flex; flex-direction: column;">
-              <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">
-                Gestion des Demandes de Trajet
-              </h2>
-              <p class="subtitle" style="margin-bottom: 16px;">
-                Validez ou rejetez les demandes de transport formulées par les utilisateurs.
-              </p>
+            <div class="glass-card" style="display: flex; flex-direction: column; overflow: hidden;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+                <div>
+                  <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;" data-i18n="dash-requests-title">
+                    Gestion des Demandes de Trajet
+                  </h2>
+                  <p class="subtitle" style="margin-bottom: 0;" data-i18n="dash-requests-subtitle">
+                    Validez, rejetez ou complétez les demandes de transport des clients.
+                  </p>
+                </div>
+                
+                <!-- Export Data Group Buttons -->
+                <div style="display: flex; gap: 8px;">
+                  <button id="exportCsvBtn" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
+                    <i class="fa-solid fa-file-csv"></i> <span data-i18n="dash-export-csv">Exporter CSV</span>
+                  </button>
+                  <button id="exportJsonBtn" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.8rem; border-radius: 8px;">
+                    <i class="fa-solid fa-file-code"></i> <span data-i18n="dash-export-json">Exporter JSON</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Filter Search Bar -->
+              <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; padding: 12px; background: rgba(255, 255, 255, 0.02); border-radius: 12px; border: 1px solid var(--border-color);">
+                
+                <!-- Text search -->
+                <div style="flex: 1.5; min-width: 200px; position: relative; display: flex; align-items: center;">
+                  <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 16px; color: var(--text-muted);"></i>
+                  <input type="text" id="searchInput" placeholder="Rechercher par client ou ID..." data-i18n="dash-search-placeholder" style="width: 100%; padding: 10px 12px 10px 42px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem;">
+                </div>
+
+                <!-- Status Filter -->
+                <div style="flex: 1; min-width: 130px;">
+                  <select id="statusFilter" style="width: 100%; padding: 10px 12px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer;">
+                    <option value="All" data-i18n="dash-filter-status">Tous les statuts</option>
+                    <option value="En attente" data-i18n="suivi-status-pending">En attente</option>
+                    <option value="Acceptée" data-i18n="suivi-status-accepted">Acceptée</option>
+                    <option value="Refusée" data-i18n="suivi-status-refused">Refusée</option>
+                    <option value="Terminée" data-i18n="suivi-status-completed">Terminée</option>
+                  </select>
+                </div>
+
+                <!-- Category Filter -->
+                <div style="flex: 1; min-width: 130px;">
+                  <select id="categoryFilter" style="width: 100%; padding: 10px 12px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer;">
+                    <option value="All" data-i18n="dash-filter-category">Toutes les catégories</option>
+                    <option value="Standard" data-i18n="trans-cat-standard">Standard</option>
+                    <option value="Comfort" data-i18n="trans-cat-comfort">Confort</option>
+                    <option value="VIP" data-i18n="trans-cat-vip">VIP</option>
+                    <option value="Cargo" data-i18n="trans-cat-cargo">Cargo</option>
+                    <option value="Medical" data-i18n="trans-cat-medical">Médical</option>
+                  </select>
+                </div>
+
+                <!-- Priority Filter -->
+                <div style="flex: 1; min-width: 130px;">
+                  <select id="priorityFilter" style="width: 100%; padding: 10px 12px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; cursor: pointer;">
+                    <option value="All" data-i18n="dash-filter-priority">Toutes les priorités</option>
+                    <option value="Low" data-i18n="trans-priority-low">Faible</option>
+                    <option value="Medium" data-i18n="trans-priority-medium">Moyenne</option>
+                    <option value="High" data-i18n="trans-priority-high">Haute</option>
+                    <option value="Urgent" data-i18n="trans-priority-urgent">Urgent</option>
+                  </select>
+                </div>
+
+              </div>
               
               <div class="table-responsive">
                 <table class="admin-table">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Client & Tél</th>
-                      <th>Trajet (Départ → Arrivée)</th>
-                      <th>Date</th>
-                      <th>Statut</th>
-                      <th style="text-align: right;">Actions</th>
+                      <th data-i18n="dash-table-id">ID</th>
+                      <th data-i18n="dash-table-client">Client & Tél</th>
+                      <th data-i18n="dash-table-route">Trajet (Départ → Arrivée)</th>
+                      <th data-i18n="dash-table-datetime">Date & Priorité</th>
+                      <th data-i18n="dash-table-status">Statut</th>
+                      <th style="text-align: right;" data-i18n="dash-table-actions">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="adminTableBody">
@@ -145,23 +216,53 @@
               </div>
             </div>
 
-            <!-- Conversation History List -->
-            <div class="glass-card" style="display: flex; flex-direction: column;">
-              <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">
-                Conversations IA
-              </h2>
-              <p class="subtitle" style="margin-bottom: 16px;">
-                Historique des interactions des clients avec le chatbot intelligent.
-              </p>
+            <!-- Side Cards Column: Chat History & User Management -->
+            <div style="display: flex; flex-direction: column; gap: 28px;">
               
-              <!-- Reset button for logs -->
-              <button id="clearLogsBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.8rem; margin-bottom: 12px; align-self: flex-end; width: auto;">
-                <i class="fa-solid fa-trash-can"></i> Vider l'historique
-              </button>
+              <!-- User Management List -->
+              <div class="glass-card" style="display: flex; flex-direction: column;">
+                <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;" data-i18n="dash-users-title">
+                  Gestion des Utilisateurs
+                </h2>
+                <p class="subtitle" style="margin-bottom: 16px;" data-i18n="dash-users-subtitle">
+                  Liste des comptes enregistrés sur la plateforme.
+                </p>
 
-              <div class="history-list" id="chatHistoryList">
-                <!-- Dynamic rendering -->
+                <div class="table-responsive" style="max-height: 240px; overflow-y: auto;">
+                  <table class="admin-table" style="font-size: 0.85rem;">
+                    <thead>
+                      <tr>
+                        <th data-i18n="dash-table-user-name">Nom</th>
+                        <th data-i18n="dash-table-user-role">Rôle</th>
+                        <th style="text-align: right;" data-i18n="dash-table-actions">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
+
+              <!-- Conversation History List -->
+              <div class="glass-card" style="display: flex; flex-direction: column;">
+                <h2 style="font-family: var(--font-title); font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;" data-i18n="dash-chat-history-title">
+                  Conversations IA
+                </h2>
+                <p class="subtitle" style="margin-bottom: 16px;" data-i18n="dash-chat-history-subtitle">
+                  Historique des interactions des clients avec le chatbot intelligent.
+                </p>
+                
+                <!-- Reset button for logs -->
+                <button id="clearLogsBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.8rem; margin-bottom: 12px; align-self: flex-end; width: auto;" data-i18n="dash-chat-clear">
+                  Vider l'historique
+                </button>
+
+                <div class="history-list" id="chatHistoryList">
+                  <!-- Dynamic rendering -->
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -175,7 +276,12 @@
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
-  <!-- Dynamic Logic Scripts -->
+  <!-- Global scripts -->
+  <script src="js/translations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  
+  <!-- Dashboard script logic -->
   <script src="js/dashboard.js"></script>
 </body>
 </html>

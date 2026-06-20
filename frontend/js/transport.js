@@ -1,165 +1,135 @@
 /* 
 ========================================================================
    Centre d'Appel Intelligent IA - Transport Form Logic (JavaScript)
-   ISGMATECH - Vanilla Script
+   ISGMATECH - Form validations, User pre-filling, Local Database
 ========================================================================
 */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ==========================================
-  // 1. GLOBAL LAYOUT LOGIC (Sidebar & Theme)
-  // ==========================================
-  const mobileToggle = document.getElementById('mobileSidebarToggle');
-  const sidebar = document.getElementById('sidebar');
-  
-  if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      sidebar.classList.toggle('active');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== mobileToggle) {
-        sidebar.classList.remove('active');
-      }
-    });
-  }
-
-  // Theme Toggle Control
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
-  if (themeToggleBtn) {
-    const applyTheme = (theme) => {
-      if (theme === 'light') {
-        document.body.classList.add('light-theme');
-        themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> <span>Clair</span>';
-      } else {
-        document.body.classList.remove('light-theme');
-        themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> <span>Sombre</span>';
-      }
-    };
-
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(currentTheme);
-
-    themeToggleBtn.addEventListener('click', () => {
-      const isLight = document.body.classList.contains('light-theme');
-      const newTheme = isLight ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme);
-      applyTheme(newTheme);
-    });
-  }
-
-  // Toast Utility
-  window.showToast = function(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
-    
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    
-    let iconClass = 'fa-info-circle';
-    if (type === 'success') iconClass = 'fa-check-circle';
-    if (type === 'danger') iconClass = 'fa-circle-exclamation';
-    
-    toast.innerHTML = `
-      <i class="fa-solid ${iconClass}"></i>
-      <span style="font-size: 0.9rem; font-weight: 500;">${message}</span>
-    `;
-    
-    container.appendChild(toast);
-    
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        toast.remove();
-      }, 300);
-    }, 3500);
-  };
-
-  // ==========================================
-  // 2. TRANSPORT FORM LOGIC
-  // ==========================================
   const form = document.getElementById('transportForm');
   const submitBtn = document.getElementById('submitFormBtn');
+  
+  const fullNameInput = document.getElementById('fullName');
+  const phoneInput = document.getElementById('phone');
+  const departureInput = document.getElementById('departure');
+  const destinationInput = document.getElementById('destination');
+  const categorySelect = document.getElementById('category');
+  const prioritySelect = document.getElementById('priority');
+  const dateTimeInput = document.getElementById('dateTime');
 
-  // Simulated API fetch POST handler
-  function simulateAPIFormSubmit(formData) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        try {
-          // Get existing requests from localStorage
-          let requests = JSON.parse(localStorage.getItem('transportRequests') || '[]');
-          
-          // Append new request
-          requests.unshift(formData); // Add to the top of list
-          
-          // Save back
-          localStorage.setItem('transportRequests', JSON.stringify(requests));
-          resolve({ success: true, data: formData });
-        } catch (error) {
-          reject(error);
-        }
-      }, 1000); // 1 second network latency simulation
-    });
+  // ==========================================
+  // 1. AUTO PRE-FILL LOGGED IN USER DATA
+  // ==========================================
+  if (window.auth) {
+    const user = window.auth.getCurrentUser();
+    if (user) {
+      fullNameInput.value = user.name || "";
+      phoneInput.value = user.phone || "";
+    }
   }
 
+  // ==========================================
+  // 2. FORM ACTION SUBMIT & VALIDATIONS
+  // ==========================================
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Fetch field inputs
-    const fullName = document.getElementById('fullName').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const departure = document.getElementById('departure').value.trim();
-    const destination = document.getElementById('destination').value.trim();
+    const fullName = fullNameInput.value.trim();
+    const phone = phoneInput.value.trim();
+    const departure = departureInput.value.trim();
+    const destination = destinationInput.value.trim();
+    const category = categorySelect.value;
+    const priority = prioritySelect.value;
+    const dateTime = dateTimeInput.value;
+
+    const lang = window.i18n.currentLang;
 
     // Check basic validations
-    if (!fullName || !phone || !departure || !destination) {
-      showToast("Veuillez remplir tous les champs du formulaire.", "danger");
+    if (!fullName || !phone || !departure || !destination || !dateTime) {
+      const emptyErr = lang === 'fr' 
+        ? "Veuillez remplir tous les champs du formulaire." 
+        : "يرجى ملء جميع الحقول المطلوبة في الاستمارة.";
+      window.showToast(emptyErr, "danger");
       return;
     }
 
-    // Phone format check (must be at least some numbers)
-    if (phone.length < 8) {
-      showToast("Veuillez saisir un numéro de téléphone valide.", "danger");
+    // Phone format validation
+    if (phone.replace(/\D/g, '').length < 6) {
+      const phoneErr = lang === 'fr'
+        ? "Veuillez saisir un numéro de téléphone valide."
+        : "يرجى كتابة رقم هاتف صحيح.";
+      window.showToast(phoneErr, "danger");
       return;
     }
 
-    // Disable button to prevent double-submit
+    // Date/Time validation (cannot be in the past)
+    const selectedDate = new Date(dateTime);
+    const currentDate = new Date();
+    // Allow a tiny window of 2 minutes for latency
+    currentDate.setMinutes(currentDate.getMinutes() - 2);
+
+    if (selectedDate < currentDate) {
+      const dateErr = lang === 'fr'
+        ? "La date de départ ne peut pas être dans le passé."
+        : "تاريخ المغادرة لا يمكن أن يكون في الماضي.";
+      window.showToast(dateErr, "danger");
+      return;
+    }
+
+    // Disable button to prevent double submits
     submitBtn.disabled = true;
     submitBtn.style.opacity = '0.7';
-    submitBtn.innerHTML = `<span>Traitement en cours...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
+    
+    const loadingText = window.i18n.t("trans-loading-submit");
+    submitBtn.innerHTML = `<span>${loadingText}</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
+    // Compile record object
     const requestID = `TR-${Math.floor(Math.random() * 90000 + 10000)}`;
+    
+    // Formatting date creation time
+    const createdDateString = new Date().toLocaleDateString('fr-FR') + ' ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    const formattedTravelDate = new Date(dateTime).toLocaleString(lang === 'fr' ? 'fr-FR' : 'ar-SA', { dateStyle: 'short', timeStyle: 'short' });
+
     const newRequest = {
       id: requestID,
       fullName: fullName,
       phone: phone,
       departure: departure,
       destination: destination,
-      status: "En attente",
-      progress: 33, // Pending progress (33%)
-      date: new Date().toLocaleDateString('fr-FR') + ' ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      category: category,      // Standard, Comfort, VIP, Cargo, Medical
+      priority: priority,      // Low, Medium, High, Urgent
+      dateTime: formattedTravelDate, // Formatted travel date
+      rawDateTime: dateTime,  // Raw input datetime
+      status: "En attente",    // Active state default
+      progress: 20,            // First checkpoint: Demand submitted (20%)
+      date: createdDateString // Submitted timestamp
     };
 
     try {
-      // Execute the simulated API request
-      const response = await simulateAPIFormSubmit(newRequest);
-      
-      if (response.success) {
-        showToast(`Demande ${requestID} créée avec succès !`, "success");
-        form.reset();
+      // Simulate API submit latency
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+
+      let requests = JSON.parse(localStorage.getItem('transportRequests') || '[]');
+      requests.unshift(newRequest);
+      localStorage.setItem('transportRequests', JSON.stringify(requests));
+
+      // Display dynamic success toast
+      const successMsg = lang === 'fr'
+        ? `Demande ${requestID} créée avec succès !`
+        : `تم إنشاء الطلب بنجاح ${requestID}!`;
         
-        // Wait 1.5 seconds and redirect to tracking page
-        setTimeout(() => {
-          window.location.href = "suivi.html";
-        }, 1500);
-      }
+      window.showToast(successMsg, "success");
+
+      // Redirect client to tracking view
+      setTimeout(() => {
+        window.location.href = "suivi.html";
+      }, 1500);
+
     } catch (err) {
-      showToast("Une erreur s'est produite lors de l'envoi de la demande.", "danger");
+      window.showToast("Erreur lors de la soumission de la demande.", "danger");
       submitBtn.disabled = false;
       submitBtn.style.opacity = '1';
-      submitBtn.innerHTML = `<span>Envoyer la demande</span> <i class="fa-solid fa-paper-plane"></i>`;
+      submitBtn.innerHTML = `<span data-i18n="trans-btn-submit">Envoyer la demande</span> <i class="fa-solid fa-paper-plane"></i>`;
     }
   });
 

@@ -16,59 +16,31 @@
 
   <div class="app-container">
     
-    <!-- Navigation Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
-        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
-        <span>ISGMATECH</span>
-      </div>
-      <nav class="sidebar-menu">
-        <a href="index.html" class="menu-item">
-          <i class="fa-solid fa-house"></i>
-          <span>Accueil</span>
-        </a>
-        <a href="chat.html" class="menu-item">
-          <i class="fa-solid fa-comments"></i>
-          <span>Chat IA</span>
-        </a>
-        <a href="transport.html" class="menu-item">
-          <i class="fa-solid fa-car"></i>
-          <span>Transport</span>
-        </a>
-        <a href="suivi.html" class="menu-item active">
-          <i class="fa-solid fa-map-location-dot"></i>
-          <span>Suivi</span>
-        </a>
-        <a href="dashboard.html" class="menu-item">
-          <i class="fa-solid fa-chart-line"></i>
-          <span>Dashboard</span>
-        </a>
-      </nav>
-      <div class="sidebar-footer">
-        <button class="theme-toggle" id="themeToggleBtn">
-          <i class="fa-solid fa-moon"></i>
-          <span>Sombre</span>
-        </button>
-      </div>
-    </aside>
+    <!-- Navigation Sidebar (Mounted dynamically by main.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
 
     <!-- Main Content Area -->
     <main class="main-content">
-      <header class="top-header">
-        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="page-title-area">
-          <h1>Suivi de Demande</h1>
-        </div>
-        <div style="width: 24px;"></div>
-      </header>
+      
+      <!-- Top Header (Mounted dynamically by main.js) -->
+      <header class="top-header"></header>
 
       <div class="content-body">
+        
+        <!-- Header Text -->
+        <div style="margin-bottom: 32px;">
+          <h2 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 700; margin-bottom: 8px;" data-i18n="suivi-title">
+            Suivi des Demandes
+          </h2>
+          <p class="subtitle" style="margin-bottom: 0;" data-i18n="suivi-subtitle">
+            Consultez l'historique et l'état en temps réel de vos demandes de transport.
+          </p>
+        </div>
+
         <!-- Container for dynamically rendered transport items -->
         <div class="suivi-list-container" id="suiviList">
           
-          <!-- Loading Indicator before JS renders (will be replaced) -->
+          <!-- Loading Indicator (will be replaced by suivi.js) -->
           <div style="text-align: center; padding: 48px;">
             <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: var(--text-muted);"></i>
             <p style="margin-top: 12px; color: var(--text-muted);">Chargement de vos demandes...</p>
@@ -83,7 +55,12 @@
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
-  <!-- Dynamic Logic Scripts -->
+  <!-- Global scripts -->
+  <script src="js/translations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Tracking specific script -->
   <script src="js/suivi.js"></script>
 </body>
 </html>

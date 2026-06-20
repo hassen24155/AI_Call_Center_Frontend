@@ -16,62 +16,23 @@
 
   <div class="app-container">
     
-    <!-- Navigation Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-brand">
-        <img src="assets/images/logo.png" alt="ISGMATECH Logo" class="logo">
-        <span>ISGMATECH</span>
-      </div>
-      <nav class="sidebar-menu">
-        <a href="index.html" class="menu-item">
-          <i class="fa-solid fa-house"></i>
-          <span>Accueil</span>
-        </a>
-        <a href="chat.html" class="menu-item">
-          <i class="fa-solid fa-comments"></i>
-          <span>Chat IA</span>
-        </a>
-        <a href="transport.html" class="menu-item active">
-          <i class="fa-solid fa-car"></i>
-          <span>Transport</span>
-        </a>
-        <a href="suivi.html" class="menu-item">
-          <i class="fa-solid fa-map-location-dot"></i>
-          <span>Suivi</span>
-        </a>
-        <a href="dashboard.html" class="menu-item">
-          <i class="fa-solid fa-chart-line"></i>
-          <span>Dashboard</span>
-        </a>
-      </nav>
-      <div class="sidebar-footer">
-        <button class="theme-toggle" id="themeToggleBtn">
-          <i class="fa-solid fa-moon"></i>
-          <span>Sombre</span>
-        </button>
-      </div>
-    </aside>
+    <!-- Navigation Sidebar (Mounted dynamically by main.js) -->
+    <aside class="sidebar" id="sidebar"></aside>
 
     <!-- Main Content Area -->
     <main class="main-content">
-      <header class="top-header">
-        <button class="mobile-toggle" id="mobileSidebarToggle" aria-label="Toggle Navigation Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <div class="page-title-area">
-          <h1>Demande de Transport</h1>
-        </div>
-        <div style="width: 24px;"></div>
-      </header>
+      
+      <!-- Top Header (Mounted dynamically by main.js) -->
+      <header class="top-header"></header>
 
       <div class="content-body">
         <div class="form-container">
           
           <div class="glass-card">
-            <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">
+            <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;" data-i18n="trans-form-title">
               Formuler une demande de trajet
             </h2>
-            <p class="subtitle" style="margin-bottom: 24px;">
+            <p class="subtitle" style="margin-bottom: 24px;" data-i18n="trans-form-subtitle">
               Remplissez le formulaire ci-dessous pour soumettre une demande de réservation de transport. L'administrateur validera votre demande rapidement.
             </p>
 
@@ -79,31 +40,62 @@
               
               <!-- Nom Complet -->
               <div class="form-group">
-                <label for="fullName"><i class="fa-solid fa-user"></i> Nom Complet</label>
+                <label for="fullName"><i class="fa-solid fa-user"></i> <span data-i18n="trans-label-name">Nom Complet</span></label>
                 <input type="text" id="fullName" placeholder="Ex: Jean Dupont" required>
               </div>
 
               <!-- Téléphone -->
               <div class="form-group">
-                <label for="phone"><i class="fa-solid fa-phone"></i> Numéro de Téléphone</label>
+                <label for="phone"><i class="fa-solid fa-phone"></i> <span data-i18n="trans-label-phone">Numéro de Téléphone</span></label>
                 <input type="tel" id="phone" placeholder="Ex: 06 12 34 56 78" required>
               </div>
 
               <!-- Adresse de Départ -->
               <div class="form-group">
-                <label for="departure"><i class="fa-solid fa-location-dot"></i> Adresse de Départ</label>
+                <label for="departure"><i class="fa-solid fa-location-dot"></i> <span data-i18n="trans-label-departure">Adresse de Départ</span></label>
                 <input type="text" id="departure" placeholder="Ex: Gare de Lyon, Paris" required>
               </div>
 
               <!-- Destination -->
               <div class="form-group">
-                <label for="destination"><i class="fa-solid fa-flag-checkered"></i> Destination</label>
-                <input type="text" id="destination" placeholder="Ex: Aéroport Charles de Gaulle, Roissy" required>
+                <label for="destination"><i class="fa-solid fa-flag-checkered"></i> <span data-i18n="trans-label-destination">Destination (Arrivée)</span></label>
+                <input type="text" id="destination" placeholder="Ex: Aéroport CDG, Roissy" required>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <!-- Catégorie de transport -->
+                <div class="form-group">
+                  <label for="category"><i class="fa-solid fa-layer-group"></i> <span data-i18n="trans-label-category">Catégorie de Transport</span></label>
+                  <select id="category" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 18px; color: var(--text-primary); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer;">
+                    <option value="Standard" data-i18n="trans-cat-standard">Standard</option>
+                    <option value="Confort" data-i18n="trans-cat-comfort">Confort</option>
+                    <option value="VIP" data-i18n="trans-cat-vip">VIP</option>
+                    <option value="Cargo" data-i18n="trans-cat-cargo">Cargo</option>
+                    <option value="Medical" data-i18n="trans-cat-medical">Médical</option>
+                  </select>
+                </div>
+
+                <!-- Niveau de Priorité -->
+                <div class="form-group">
+                  <label for="priority"><i class="fa-solid fa-circle-exclamation"></i> <span data-i18n="trans-label-priority">Niveau de Priorité</span></label>
+                  <select id="priority" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 18px; color: var(--text-primary); font-family: var(--font-body); font-size: 0.95rem; cursor: pointer;">
+                    <option value="Low" data-i18n="trans-priority-low">Faible</option>
+                    <option value="Medium" data-i18n="trans-priority-medium" selected>Moyenne</option>
+                    <option value="High" data-i18n="trans-priority-high">Haute</option>
+                    <option value="Urgent" data-i18n="trans-priority-urgent">Urgent</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Date et Heure de départ -->
+              <div class="form-group" style="margin-bottom: 24px;">
+                <label for="dateTime"><i class="fa-solid fa-calendar-day"></i> <span data-i18n="trans-label-datetime">Date & Heure de départ</span></label>
+                <input type="datetime-local" id="dateTime" required style="cursor: pointer;">
               </div>
 
               <!-- Submit Button -->
               <button type="submit" class="btn btn-primary" id="submitFormBtn">
-                <span>Envoyer la demande</span>
+                <span data-i18n="trans-btn-submit">Envoyer la demande</span>
                 <i class="fa-solid fa-paper-plane"></i>
               </button>
 
@@ -119,7 +111,12 @@
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
-  <!-- Dynamic Logic Scripts -->
+  <!-- Shared modules -->
+  <script src="js/translations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Form specific logic -->
   <script src="js/transport.js"></script>
 </body>
 </html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Créer un compte sur la plateforme ISGMATECH - Centre d'Appel Intelligent IA.">
+  <title>Inscription - ISGMATECH</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+
+  <!-- Top bar actions: Language & Theme -->
+  <div style="position: absolute; top: 24px; right: 24px; left: 24px; display: flex; justify-content: flex-end; gap: 16px; align-items: center; z-index: 10;">
+    <div class="lang-switcher-container">
+      <button class="lang-btn" id="langDropdownBtn">
+        <i class="fa-solid fa-globe"></i>
+        <span>Français</span>
+        <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-option" data-lang="fr">
+          <span>Français</span>
+        </button>
+        <button class="lang-option" data-lang="ar">
+          <span>العربية</span>
+        </button>
+        <button class="lang-option" data-lang="hr">
+          <span>الحسانية</span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggleBtn" style="width: 42px; height: 42px; padding: 0; border-radius: 50%;">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+
+  <div class="auth-container" style="max-width: 520px;">
+    <div class="glass-card auth-card" style="padding: 30px 32px;">
+      
+      <!-- Logo Section -->
+      <div class="auth-logo" style="margin-bottom: 16px;">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo">
+      </div>
+
+      <div class="auth-header" style="margin-bottom: 24px;">
+        <h1 data-i18n="auth-register-title">Créer un compte</h1>
+        <p data-i18n="auth-register-subtitle">Rejoignez notre plateforme de transport intelligent IA</p>
+      </div>
+
+      <form id="registerForm" novalidate>
+        
+        <!-- Nom Complet Input -->
+        <div class="form-group">
+          <label for="name" data-i18n="auth-label-name">Nom Complet</label>
+          <input type="text" id="name" placeholder="Ex: Jean Dupont" required>
+        </div>
+
+        <!-- Email Input -->
+        <div class="form-group">
+          <label for="email" data-i18n="auth-label-email">Adresse Email</label>
+          <input type="email" id="email" placeholder="Ex: client@isgmatech.com" required>
+        </div>
+
+        <!-- Phone Input -->
+        <div class="form-group">
+          <label for="phone" data-i18n="auth-label-phone">Téléphone</label>
+          <input type="tel" id="phone" placeholder="Ex: 06 12 34 56 78" required>
+        </div>
+
+        <!-- Role Select Input -->
+        <div class="form-group">
+          <label for="role" data-i18n="auth-label-role">Rôle de l'utilisateur</label>
+          <select id="role" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 18px; color: var(--text-primary); font-family: var(--font-body); font-size: 0.95rem;">
+            <option value="Client" data-i18n="auth-role-client">Client (Passager)</option>
+            <option value="Administrator" data-i18n="auth-role-admin">Administrateur</option>
+          </select>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="password" data-i18n="auth-label-password">Mot de passe</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          <span data-i18n="auth-btn-register">Créer le compte</span>
+          <i class="fa-solid fa-user-plus"></i>
+        </button>
+
+      </form>
+
+      <!-- Auth Footer Link -->
+      <div class="auth-footer-links" style="margin-top: 20px;">
+        <span data-i18n="auth-has-account">Déjà un compte ?</span>
+        <a href="login.html" data-i18n="auth-link-login">Se connecter ici</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Shared modules -->
+  <script src="js/translations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Register page-specific script logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const registerForm = document.getElementById('registerForm');
+      
+      registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const role = document.getElementById('role').value;
+        const password = document.getElementById('password').value;
+        
+        if (!name || !email || !phone || !password) {
+          const errMsg = window.i18n.currentLang === 'fr' 
+            ? "Veuillez remplir tous les champs." 
+            : "يرجى ملء جميع الحقول المطلوبة.";
+          window.showToast(errMsg, "danger");
+          return;
+        }
+        
+        if (password.length < 6) {
+          const passMsg = window.i18n.currentLang === 'fr' 
+            ? "Le mot de passe doit comporter au moins 6 caractères." 
+            : "يجب أن تتكون كلمة السر من 6 أحرف على الأقل.";
+          window.showToast(passMsg, "danger");
+          return;
+        }
+        
+        const response = window.auth.register(name, email, phone, role, password);
+        
+        if (response.success) {
+          const successMsg = window.i18n.currentLang === 'fr'
+            ? "Compte créé avec succès ! Redirection vers la connexion..."
+            : "تم إنشاء الحساب بنجاح! جاري التوجيه لصفحة الدخول...";
+            
+          window.showToast(successMsg, "success");
+          
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1500);
+        } else {
+          window.showToast(response.message, "danger");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

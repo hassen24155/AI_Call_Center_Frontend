@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Se connecter à la plateforme ISGMATECH - Centre d'Appel Intelligent IA.">
+  <title>Connexion - ISGMATECH</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-body">
+
+  <!-- Top bar actions: Language & Theme -->
+  <div style="position: absolute; top: 24px; right: 24px; left: 24px; display: flex; justify-content: flex-end; gap: 16px; align-items: center; z-index: 10;">
+    <div class="lang-switcher-container">
+      <button class="lang-btn" id="langDropdownBtn">
+        <i class="fa-solid fa-globe"></i>
+        <span>Français</span>
+        <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-option" data-lang="fr">
+          <span>Français</span>
+        </button>
+        <button class="lang-option" data-lang="ar">
+          <span>العربية</span>
+        </button>
+        <button class="lang-option" data-lang="hr">
+          <span>الحسانية</span>
+        </button>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggleBtn" style="width: 42px; height: 42px; padding: 0; border-radius: 50%;">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+
+  <div class="auth-container">
+    <div class="glass-card auth-card">
+      
+      <!-- Logo Section -->
+      <div class="auth-logo">
+        <img src="assets/images/logo.png" alt="ISGMATECH Logo">
+      </div>
+
+      <div class="auth-header">
+        <h1 data-i18n="auth-login-title">Bienvenue</h1>
+        <p data-i18n="auth-login-subtitle">Connectez-vous pour accéder à vos services et discussions</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        
+        <!-- Email Input -->
+        <div class="form-group">
+          <label for="email" data-i18n="auth-label-email">Adresse Email</label>
+          <input type="email" id="email" placeholder="Ex: client@isgmatech.com" required>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label for="password" data-i18n="auth-label-password">Mot de passe</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <!-- Forgot Password Link -->
+        <div style="text-align: right; margin-bottom: 24px;">
+          <a href="forgot-password.html" class="text-link" style="font-size: 0.85rem; color: var(--accent-cyan); text-decoration: none; font-weight: 500;" data-i18n="auth-forgot-password">
+            Mot de passe oublié ?
+          </a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+          <span data-i18n="auth-btn-login">Se connecter</span>
+          <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+
+      </form>
+
+      <!-- Auth Footer Link -->
+      <div class="auth-footer-links">
+        <span data-i18n="auth-no-account">Pas encore de compte ?</span>
+        <a href="register.html" data-i18n="auth-link-register">S'inscrire ici</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Shared modules -->
+  <script src="js/translations.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Login page-specific script logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('loginForm');
+      
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        
+        if (!email || !password) {
+          const errMsg = window.i18n.currentLang === 'fr' 
+            ? "Voulez-vous remplir tous les champs." 
+            : "يرجى ملء جميع الحقول المطلوبة.";
+          window.showToast(errMsg, "danger");
+          return;
+        }
+        
+        const response = window.auth.login(email, password);
+        
+        if (response.success) {
+          const successMsg = window.i18n.currentLang === 'fr'
+            ? "Connexion réussie ! Redirection..."
+            : "تم تسجيل الدخول بنجاح! جاري التوجيه...";
+            
+          window.showToast(successMsg, "success");
+          
+          setTimeout(() => {
+            if (response.user.role === 'Administrator') {
+              window.location.href = "dashboard.html";
+            } else {
+              window.location.href = "index.html";
+            }
+          }, 1000);
+        } else {
+          window.showToast(response.message, "danger");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
